@@ -11,7 +11,7 @@ typedef struct {
     bool pressed;
     Rectangle bounds;
     const char* text;
-    int* constructionType;  
+    int* constructionType;
 } Button;
 
 #define MAX_BUTTONS 10
@@ -68,7 +68,7 @@ typedef struct {
 
 //The conglomerate of persons in the city
 typedef struct {
-    Pessoa* pessoas; 
+    Pessoa* pessoas;
     int PopulacaoTotal;
     int RendaMedia;
     int FelicidadeMedia;
@@ -132,11 +132,11 @@ typedef struct {
 //This is the function for leveling up or buy a construction.
 void updateConstruction(Construcao* construcao, int constructionType) {
     switch (constructionType) {
-    case 0: 
+    case 0:
         construcao->hospital.Quantidade++;
         construcao->TotalConstrucoes++;
         break;
-    case 1: 
+    case 1:
         construcao->escola.Quantidade++;
         construcao->TotalConstrucoes++;
         break;
@@ -146,40 +146,40 @@ void updateConstruction(Construcao* construcao, int constructionType) {
     case 3:
         construcao->moradia.Quantidade++;construcao->TotalConstrucoes++;
         break;
-    case 4: 
+    case 4:
         construcao->esportes.Quantidade++;construcao->TotalConstrucoes++;
         break;
-    case 5: 
+    case 5:
         construcao->hospital.Nivel++;
-        break;   
-    case 6: 
+        break;
+    case 6:
         construcao->escola.Nivel++;
-        break;   
-    case 7:  
+        break;
+    case 7:
         construcao->restaurantes.Nivel++;
         break;
-    case 8:  
+    case 8:
         construcao->moradia.Nivel++;
         break;
-    case 9: 
+    case 9:
         construcao->esportes.Nivel++;
         break;
     default: printf_s("Deu erro!!!!!");
     }
-    
+
 }
 
 //Every person on the beginning of the city has a random job
-Trabalho iniciarTrabalhoAleatorio(){
+Trabalho iniciarTrabalhoAleatorio() {
     Trabalho trabalho;
-    
+
     int randomValue = rand() % 4;
 
-        //Industry is 0, Agriculture is 1 and so on.
-        trabalho.Industria = (randomValue % 4 == 0);
-        trabalho.Agricultura = (randomValue % 4 == 1);
-        trabalho.Informal = (randomValue % 4 == 2);
-        trabalho.Desempregado = (randomValue % 4 == 3);
+    //Industry is 0, Agriculture is 1 and so on.
+    trabalho.Industria = (randomValue % 4 == 0);
+    trabalho.Agricultura = (randomValue % 4 == 1);
+    trabalho.Informal = (randomValue % 4 == 2);
+    trabalho.Desempregado = (randomValue % 4 == 3);
 
     return trabalho;
 }
@@ -195,7 +195,7 @@ Pessoa iniciarPessoaAleatoria(int index) {
     pessoa.Revolta = 0;
     pessoa.Genero = rand() % 2; // 0 for male, 1 for female. want to acrescent other options later on.
     pessoa.trabalho = iniciarTrabalhoAleatorio();
-    
+
 
     //possibility of no housing (want to work on this later on)
     //the ideia is for people with no housing to attend public houses, change the muder rate, etc.
@@ -226,7 +226,7 @@ Pessoa iniciarPessoaAleatoria(int index) {
     pessoa.Pai = 0; // Initialize to 0
     pessoa.Mae = 0; // Initialize to 0
 
-    
+
     return pessoa;
 }
 
@@ -236,7 +236,7 @@ Populacao iniciarPopulacaoAleatoria() {
     Populacao populacao;
     populacao.PopulacaoTotal = 5; // Número inicial de pessoas na população
 
-    
+
     populacao.pessoas = (Pessoa*)malloc(populacao.PopulacaoTotal * sizeof(Pessoa));
     srand(time(NULL));
 
@@ -251,7 +251,7 @@ Populacao iniciarPopulacaoAleatoria() {
     int totalDesempregados = 0;
     int totalIdade = 0;
 
-   
+
     populacao.MoradiaDesocupada = 0;
 
     return populacao;
@@ -261,19 +261,19 @@ Populacao iniciarPopulacaoAleatoria() {
 Construcao iniciarConstrucaoAleatoria() {
     Construcao construcao;
 
-    construcao.hospital.Quantidade = 0; 
+    construcao.hospital.Quantidade = 0;
     construcao.escola.Quantidade = 0;
     construcao.restaurantes.Quantidade = 0;
     construcao.esportes.Quantidade = 0;
     construcao.moradia.Quantidade = 0;
 
-    construcao.hospital.Nivel = 1; 
+    construcao.hospital.Nivel = 1;
     construcao.escola.Nivel = 1;
     construcao.restaurantes.Nivel = 1;
     construcao.esportes.Nivel = 1;
     construcao.moradia.Nivel = 1;
 
-   
+
     construcao.TotalConstrucoes = construcao.hospital.Quantidade + construcao.escola.Quantidade +
         construcao.restaurantes.Quantidade + construcao.esportes.Quantidade + construcao.moradia.Quantidade;
 
@@ -309,7 +309,7 @@ int atualizarOrcamento(Bairro* bairro, float taxrate) {
     int desEsp = bairro->construcao.esportes.Nivel * bairro->construcao.esportes.Quantidade * 2500;
     int despesas = desHos + desEs + desRes + desMor + desEsp;
 
-  return (arrecadacao - despesas);
+    return (arrecadacao - despesas);
 }
 
 //The time system of the city
@@ -366,8 +366,8 @@ Pessoa Filho(int masc, int fem, Bairro* bairro) {
     pessoa.trabalho.Agricultura = 0;
     pessoa.Genero = rand() % 2; // 0 for male, 1 for female
     pessoa.Sobrenome = masc;
-    pessoa.Pai = masc; 
-    pessoa.Mae = fem; 
+    pessoa.Pai = masc;
+    pessoa.Mae = fem;
 
     if (bairro->populacao.pessoas[masc].Moradia == true || bairro->populacao.pessoas[fem].Moradia == true) {
         pessoa.Moradia = true;
@@ -377,7 +377,7 @@ Pessoa Filho(int masc, int fem, Bairro* bairro) {
         pessoa.Moradia = false;
         pessoa.Renda = 0;
     }
-    
+
     pessoa.Idade = 0;
     pessoa.Felicidade = 10;
     pessoa.Revolta = 0;
@@ -419,9 +419,9 @@ void atualizarPopulacao(Bairro* bairro, float taxRate) {
     int i = rand() % bairro->populacao.PopulacaoTotal;
     int j = rand() % bairro->populacao.PopulacaoTotal;
 
-    while(i == j)
-         j = rand() % bairro->populacao.PopulacaoTotal;
-        
+    while (i == j)
+        j = rand() % bairro->populacao.PopulacaoTotal;
+
 
 
     if (bairro->populacao.pessoas[i].Felicidade >= 0 && bairro->populacao.pessoas[j].Felicidade >= 0) {
@@ -455,26 +455,26 @@ void atualizarPopulacao(Bairro* bairro, float taxRate) {
                 bairro->populacao.PopulacaoTotal++;
             }
 
-            
+
         }
     }
-    
+
 
     int FeliMedia = 0;
     for (int i = 0; i < bairro->populacao.PopulacaoTotal; i++) {
         Pessoa* pessoa = &bairro->populacao.pessoas[i];
-        
+
         // Calculate happiness increment based on construction types (want to improve this later on)
-        int constructionHappinessEs = bairro->construcao.escola.Quantidade * 10 * (0.2* bairro->construcao.escola.Nivel);
+        int constructionHappinessEs = bairro->construcao.escola.Quantidade * 10 * (0.2 * bairro->construcao.escola.Nivel);
         int constructionHappinessHos = bairro->construcao.hospital.Quantidade * 5 * (0.2 * bairro->construcao.hospital.Nivel);
         int constructionHappinessESP = bairro->construcao.esportes.Quantidade * 2 * (0.2 * bairro->construcao.esportes.Nivel);
         int constructionHappinessRes = bairro->construcao.restaurantes.Quantidade * 1 * (0.2 * bairro->construcao.restaurantes.Nivel);
         int constructionHappinessMor = bairro->construcao.moradia.Quantidade * 1 * (0.2 * bairro->construcao.moradia.Nivel);
-            
-        int FeliTOTAL = constructionHappinessEs + constructionHappinessHos + constructionHappinessESP + constructionHappinessRes + constructionHappinessMor;
-        
 
-        pessoa->Felicidade += FeliTOTAL - (100*taxRate); 
+        int FeliTOTAL = constructionHappinessEs + constructionHappinessHos + constructionHappinessESP + constructionHappinessRes + constructionHappinessMor;
+
+
+        pessoa->Felicidade += FeliTOTAL - (100 * taxRate);
         if (pessoa->Felicidade < 0) {
             pessoa->Felicidade = 0;
         }
@@ -530,27 +530,44 @@ float DrawSlider2(Rectangle bounds, float minValue, float maxValue, float curren
 
 
 int main() {
-   
+
     srand(time(NULL));
     const int screenWidth = 800;
     const int screenHeight = 600;
     Rectangle startButton = { screenWidth / 2 - 100, screenHeight / 2, 200, 50 };
+    Rectangle Q1Button = { screenWidth / 8, screenHeight / 6, 50, 50 };
+    Rectangle Q2Button = { screenWidth / 8, screenHeight / 3, 50, 50 };
+    Rectangle Q3Button = { screenWidth / 8, screenHeight / 2, 50, 50 };
+    Rectangle Q4Button = { screenWidth / 8, screenHeight - 200, 50, 50 };
+    Rectangle Continue = { screenWidth / 2 - 100, screenHeight / 2, 200, 50 };
     Color startButtonColor = DARKGRAY;
+
+    Color Q1ButtonColor = DARKGRAY;
+    Color Q2ButtonColor = DARKGRAY;
+    Color Q3ButtonColor = DARKGRAY;
+    Color Q4ButtonColor = DARKGRAY;
+
     float taxRate = 0.25;
-    bool inGame = false;
-    int days = 1;         
-    int months = 1;       
-    int years = 1;        
+    bool scene1 = true;
+    bool scene2 = false;
+    bool scene3 = false;
+    bool scene4 = false;
+    bool scene5 = false;
+    int days = 1;
+    int months = 1;
+    int years = 1;
     int frameCounter = 0;
     int yearsPassed = 0;
     float taxadeAtualizacao = 0.1;
+    int xAxis = 0;
+    int yAxis = 0;
     InitWindow(screenWidth, screenHeight, "GUI Example");
     SetTargetFPS(144);
     Rectangle B1 = { 50, 50, 100, 40 };
     Rectangle B2 = { 50, 100, 100, 40 };
     Rectangle B3 = { 50, 150, 100, 40 };
     Rectangle B4 = { 50, 200, 100, 40 };
-    Rectangle B5= { 50, 250, 100, 40 };
+    Rectangle B5 = { 50, 250, 100, 40 };
     Rectangle B6 = { 200, 50, 100, 40 };
     Rectangle B7 = { 200, 100, 100, 40 };
     Rectangle B8 = { 200, 150, 100, 40 };
@@ -582,13 +599,121 @@ int main() {
 
     while (!WindowShouldClose()) {
 
-        if (!inGame) {
+        if (scene1) {
             if (CheckCollisionPointRec(GetMousePosition(), startButton)) {
                 startButtonColor = GRAY;
 
                 if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) {
-                   
-                    inGame = true;
+                    scene1 = false;
+                    scene2 = true;
+                }
+            }
+            else {
+                startButtonColor = DARKGRAY;
+            }
+        }
+        else if (scene2) {
+            if (CheckCollisionPointRec(GetMousePosition(), Q1Button)) {
+                Q1ButtonColor = GRAY;
+                if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) {
+                    yAxis++;
+                    scene2 = false;
+                    scene3 = true;
+                }
+            }
+            else {
+                Q1ButtonColor = DARKGRAY;
+            }
+
+            if (CheckCollisionPointRec(GetMousePosition(), Q2Button)) {
+                Q2ButtonColor = GRAY;
+                if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) {
+                    yAxis--;
+                    scene2 = false;
+                    scene3 = true;
+                }
+            }
+            else {
+                Q2ButtonColor = DARKGRAY;
+            }
+            if (CheckCollisionPointRec(GetMousePosition(), Q3Button)) {
+                Q3ButtonColor = GRAY;
+                if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) {
+                    xAxis++;
+                    scene2 = false;
+                    scene3 = true;
+                }
+            }
+            else {
+                Q3ButtonColor = DARKGRAY;
+            }
+            if (CheckCollisionPointRec(GetMousePosition(), Q4Button)) {
+                Q4ButtonColor = GRAY;
+                if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) {
+                    xAxis--;
+                    scene2 = false;
+                    scene3 = true;
+                }
+            }
+            else {
+                Q4ButtonColor = DARKGRAY;
+            }
+        }
+        else if (scene3) {
+           
+            if (CheckCollisionPointRec(GetMousePosition(), Q1Button)) {
+                Q1ButtonColor = GRAY;
+                if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) {
+                    yAxis++;
+                    scene3 = false;
+                    scene4 = true;
+                }
+            }
+            else {
+                Q1ButtonColor = DARKGRAY;
+            }
+
+            if (CheckCollisionPointRec(GetMousePosition(), Q2Button)) {
+                Q2ButtonColor = GRAY;
+                if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) {
+                    yAxis--;
+                    scene3 = false;
+                    scene4 = true;
+                }
+            }
+            else {
+                Q2ButtonColor = DARKGRAY;
+            }
+            if (CheckCollisionPointRec(GetMousePosition(), Q3Button)) {
+                Q3ButtonColor = GRAY;
+                if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) {
+                    xAxis++;
+                    scene3 = false;
+                    scene4 = true;
+                }
+            }
+            else {
+                Q3ButtonColor = DARKGRAY;
+            }
+            if (CheckCollisionPointRec(GetMousePosition(), Q4Button)) {
+                Q4ButtonColor = GRAY;
+                if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) {
+                    xAxis--;
+                    scene3 = false;
+                    scene4 = true;
+                }
+            }
+            else {
+                Q4ButtonColor = DARKGRAY;
+            }
+        }
+        else if (scene4) {
+            if (CheckCollisionPointRec(GetMousePosition(), Continue)) {
+                startButtonColor = GRAY;
+
+                if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) {
+                    scene4 = false;
+                    scene5 = true;
                 }
             }
             else {
@@ -598,25 +723,77 @@ int main() {
 
         BeginDrawing();
         ClearBackground(RAYWHITE);
-        
 
-        if (!inGame) {
-            
+
+        if (scene1) {
+
             DrawText("Simulador do Nobre", screenWidth / 2 - MeasureText("Simulador do Nobre", 40) / 2, screenHeight / 4, 40, DARKGRAY);
 
-           
+
             DrawRectangleRec(startButton, startButtonColor);
             DrawText("Start", startButton.x + 45, startButton.y + 10, 30, RAYWHITE);
         }
-        else {
+        else if (scene2) {
+            DrawText("Pergunta 1", screenWidth / 2 - MeasureText("Pergunta 1", 40) / 2, screenHeight / 4, 40, DARKGRAY);
+
+            DrawRectangleRec(Q1Button, Q1ButtonColor);
+            DrawText("Q1", Q1Button.x+10, Q1Button.y + 10, 30, RAYWHITE);
+
+            DrawRectangleRec(Q2Button, Q2ButtonColor);
+            DrawText("Q2", Q2Button.x + 10, Q2Button.y + 10, 30, RAYWHITE);
+
+            DrawRectangleRec(Q3Button, Q3ButtonColor);
+            DrawText("Q3", Q3Button.x + 10, Q3Button.y + 10, 30, RAYWHITE);
+
+            DrawRectangleRec(Q4Button, Q4ButtonColor);
+            DrawText("Q4", Q4Button.x + 10, Q4Button.y + 10, 30, RAYWHITE);
+
+        }
+        else if (scene3) {
+            DrawText("Pergunta 2", screenWidth / 2 - MeasureText("Pergunta 1", 40) / 2, screenHeight / 4, 40, DARKGRAY);
+
+            DrawRectangleRec(Q1Button, Q1ButtonColor);
+            DrawText("Q1", Q1Button.x + 10, Q1Button.y + 10, 30, RAYWHITE);
+
+            DrawRectangleRec(Q2Button, Q2ButtonColor);
+            DrawText("Q2", Q2Button.x + 10, Q2Button.y + 10, 30, RAYWHITE);
+
+            DrawRectangleRec(Q3Button, Q3ButtonColor);
+            DrawText("Q3", Q3Button.x + 10, Q3Button.y + 10, 30, RAYWHITE);
+
+            DrawRectangleRec(Q4Button, Q4ButtonColor);
+            DrawText("Q4", Q4Button.x + 10, Q4Button.y + 10, 30, RAYWHITE);
+        }
+        else if (scene4) {
+            if (xAxis > 0 && yAxis > 0) {
+                DrawText("Nazista Corno", screenWidth / 2 - MeasureText("Nazista Corno", 40) / 2, screenHeight / 4, 40, DARKGRAY);
+            }
+            else if (xAxis > 0 && yAxis < 0) {
+                DrawText("Liberal Safado", screenWidth / 2 - MeasureText("Liberal Safado", 40) / 2, screenHeight / 4, 40, DARKGRAY);
+            }
+            else if (xAxis < 0 && yAxis < 0) {
+                DrawText("Esquerdomacho Piranha", screenWidth / 2 - MeasureText("Esquerdomacho Piranha", 40) / 2, screenHeight / 4, 40, DARKGRAY);
+            }
+            else if (xAxis > 0 && yAxis < 0) {
+                DrawText("Comuna Raiz", screenWidth / 2 - MeasureText("Comuna Raiz", 40) / 2, screenHeight / 4, 40, DARKGRAY);
+            }
+            else if (xAxis == 0 || yAxis == 0) {
+                DrawText("Centrão de Merda", screenWidth / 2 - MeasureText("Centrão de Merda", 40) / 2, screenHeight / 4, 40, DARKGRAY);
+            }
+
+            DrawRectangleRec(Continue, startButtonColor);
+            DrawText("Continue", startButton.x + 45, startButton.y + 10, 30, RAYWHITE);
+
+        }
+        else if (scene5) {
             ClearBackground(BLUE);
-            
+
             taxRate = DrawSlider(slider, 0.1f, 1.0f, taxRate);
             taxadeAtualizacao = DrawSlider2(slider2, 0.000001f, 0.1f, taxadeAtualizacao);
             UpdateTime(&days, &months, &years, &frameCounter, taxadeAtualizacao);
 
             //every 10 days the population is refreshed
-            if (days%10 == 0) {
+            if (days % 10 == 0) {
                 atualizarPopulacao(&bairro, taxRate);
             }
 
@@ -628,7 +805,7 @@ int main() {
                 yearsPassed++;
             }
 
-            
+
             //The buttons for the constructions
             for (int i = 0; i < numButtons; i++) {
                 buttons[i].pressed = false;
@@ -715,7 +892,7 @@ int main() {
             DrawText(TextFormat("TotalContrucoes: %d", bairro.construcao.TotalConstrucoes), 330, 350, 20, BLACK);
             DrawText(TextFormat("Populacao: %d", bairro.populacao.PopulacaoTotal), 330, 400, 20, BLACK);
             DrawText(TextFormat("FelicidadeMedia: %d", bairro.populacao.FelicidadeMedia), 330, 450, 20, BLACK);
-            DrawText(TextFormat("Imposto: %.0f%%",taxRate*100), 50, 450, 20, BLACK);
+            DrawText(TextFormat("Imposto: %.0f%%", taxRate * 100), 50, 450, 20, BLACK);
             DrawText(TextFormat("taxaAtualizacao: %f", taxadeAtualizacao), 50, 550, 20, BLACK);
             DrawText(TextFormat("%d", bairro.construcao.hospital.Quantidade), 170, 50, 20, BLACK);
             DrawText(TextFormat("%d", bairro.construcao.escola.Quantidade), 170, 100, 20, BLACK);
@@ -727,11 +904,12 @@ int main() {
             DrawText(TextFormat("%d", bairro.construcao.restaurantes.Nivel), 310, 150, 20, BLACK);
             DrawText(TextFormat("%d", bairro.construcao.moradia.Nivel), 310, 200, 20, BLACK);
             DrawText(TextFormat("%d", bairro.construcao.esportes.Nivel), 310, 250, 20, BLACK);
+            
 
 
         }
 
-        
+
         EndDrawing();
     }
     CloseWindow();
